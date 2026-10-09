@@ -610,46 +610,46 @@ p {
   background: #969c85;
 }
 .family-dots .canvas-title,
-.family-muse .canvas-title {
+.family-heads .canvas-title {
   top: 5%;
   width: 500px;
 }
 .family-dots .canvas-title h1,
-.family-muse .canvas-title h1 {
+.family-heads .canvas-title h1 {
   font-size: 42px;
   line-height: 1.1;
 }
 .family-dots .doodle-arrow,
-.family-muse .doodle-arrow {
+.family-heads .doodle-arrow {
   left: 47%;
   top: 35%;
   width: 55px;
   transform: rotate(30deg);
 }
 .family-dots .doodle-spark,
-.family-muse .doodle-spark {
+.family-heads .doodle-spark {
   left: 90%;
   top: 25%;
 }
 .family-dots .canvas-character:hover .agent-avatar,
-.family-muse .canvas-character:hover .agent-avatar {
+.family-heads .canvas-character:hover .agent-avatar {
   transform: scale(1.04);
 }
-.family-muse .character-name {
+.family-heads .character-name {
   bottom: -14px;
 }
-.family-muse .canvas-character.is-selected::after {
+.family-heads .canvas-character.is-selected::after {
   bottom: -23px;
 }
 @media (min-width: 1450px) {
   .family-dots .canvas-character,
-  .family-muse .canvas-character {
+  .family-heads .canvas-character {
     width: calc(var(--character-size) * 1.14);
     height: calc(var(--character-size) * 1.14);
   }
 }
 @media (max-width: 1100px) and (min-width: 601px) {
-  .family-muse .canvas-character {
+  .family-heads .canvas-character {
     width: calc(var(--character-size) * 0.73);
     height: calc(var(--character-size) * 0.73);
   }
@@ -670,12 +670,12 @@ p {
     font-size: 6px;
   }
   .family-dots .canvas-title,
-  .family-muse .canvas-title {
+  .family-heads .canvas-title {
     top: 2%;
     width: 290px;
   }
   .family-dots .canvas-title h1,
-  .family-muse .canvas-title h1 {
+  .family-heads .canvas-title h1 {
     font-size: 30px;
   }
   .family-dots .canvas-characters {
@@ -689,33 +689,33 @@ p {
     width: 131px;
     height: 131px;
   }
-  .family-muse .canvas-characters {
+  .family-heads .canvas-characters {
     top: 155px;
     bottom: 38px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 23px 2px;
   }
-  .family-muse .canvas-character {
+  .family-heads .canvas-character {
     width: 104px;
     height: 140px;
   }
-  .family-muse .canvas-character:nth-child(4) {
+  .family-heads .canvas-character:nth-child(4) {
     grid-column: 1;
     transform: translateX(35px) rotate(-2deg);
   }
-  .family-muse .canvas-character:nth-child(5) {
+  .family-heads .canvas-character:nth-child(5) {
     grid-column: 3;
     transform: translateX(-35px) rotate(3deg);
   }
   .family-dots .doodle-arrow,
-  .family-muse .doodle-arrow {
+  .family-heads .doodle-arrow {
     top: 23%;
     left: 12%;
     width: 36px;
   }
   .family-dots .doodle-spark,
-  .family-muse .doodle-spark {
+  .family-heads .doodle-spark {
     top: 24%;
     left: 87%;
   }
@@ -729,7 +729,7 @@ p {
   }
 }
 @media (max-width: 360px) {
-  .family-muse .canvas-character {
+  .family-heads .canvas-character {
     width: 88px;
     height: 124px;
   }
@@ -742,24 +742,112 @@ p {
   }
 }
 .family-dots .canvas-title h1,
-.family-muse .canvas-title h1,
+.family-heads .canvas-title h1,
 .family-grok .canvas-title h1 {
   margin: 12px 0;
   font-size: 42px;
   line-height: 1.1;
 }
 .family-dots .canvas-title,
-.family-muse .canvas-title {
+.family-heads .canvas-title {
   top: 7%;
 }
 @media (max-width: 600px) {
   .family-dots .canvas-title h1,
-  .family-muse .canvas-title h1,
+  .family-heads .canvas-title h1,
   .family-grok .canvas-title h1 {
     font-size: 33px;
   }
   .family-dots .canvas-title,
-  .family-muse .canvas-title {
+  .family-heads .canvas-title {
     top: 3%;
+  }
+}
+/* Sixteen flat cartoon heads; no cards, just a larger open canvas. */
+.family-heads {
+  min-height: 790px;
+}
+.family-heads .canvas-characters {
+  inset: 150px 8% 45px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 22px 30px;
+  align-items: center;
+  justify-items: center;
+}
+.family-heads .canvas-character,
+.family-heads .canvas-character:nth-child(n) {
+  position: relative;
+  left: auto !important;
+  top: auto !important;
+  width: 130px;
+  height: 130px;
+  transform: none;
+  grid-column: auto;
+}
+.family-heads .character-name {
+  bottom: -14px;
+  font-size: 9px;
+}
+.family-heads .canvas-character.is-selected::after {
+  bottom: -22px;
+}
+.family-heads .canvas-title {
+  top: 2%;
+}
+.family-heads .doodle-arrow {
+  top: 13%;
+  left: 18%;
+  width: 46px;
+}
+.family-heads .doodle-spark {
+  top: 13%;
+  left: 83%;
+}
+@media (max-width: 900px) {
+  .family-heads .canvas-characters {
+    left: 2%;
+    right: 2%;
+    gap: 22px 12px;
+  }
+  .family-heads .canvas-character,
+  .family-heads .canvas-character:nth-child(n) {
+    width: 115px;
+    height: 115px;
+  }
+}
+@media (max-width: 600px) {
+  .family-heads {
+    min-height: 810px;
+  }
+  .family-heads .canvas-characters {
+    inset: 145px 0 35px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 18px 4px;
+  }
+  .family-heads .canvas-character,
+  .family-heads .canvas-character:nth-child(n) {
+    width: 86px;
+    height: 86px;
+  }
+  .family-heads .canvas-character:last-child {
+    grid-column: 2;
+  }
+  .family-heads .character-name {
+    font-size: 7px;
+    bottom: -9px;
+  }
+  .family-heads .canvas-character.is-selected::after {
+    bottom: -15px;
+  }
+  .family-heads .doodle-arrow {
+    top: 12%;
+    left: 7%;
+  }
+  .family-heads .doodle-spark {
+    top: 12%;
+    left: 85%;
   }
 }

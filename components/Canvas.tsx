@@ -111,15 +111,15 @@ export default function Canvas() {
                 ? "A FEW FRIENDLY FACES"
                 : family === "dots"
                   ? "SOFT SHAPES. SERIOUS PERSONALITY."
-                  : family === "muse"
+                  : family === "heads"
                     ? "A LITTLE MORE CHARACTER"
                     : "SMALL BOTS. BIG ENERGY."}
             </span>
             <h1>
               {family === "dots" ? (
                 "The Dots."
-              ) : family === "muse" ? (
-                "Meet your Muse."
+              ) : family === "heads" ? (
+                "Meet the Heads."
               ) : family === "grok" ? (
                 "Small bots. Big spirit."
               ) : (
@@ -156,13 +156,8 @@ export default function Canvas() {
                       size: 232,
                       r: [-6, 2, -2, 6][i],
                     }
-                  : family === "muse"
-                    ? {
-                        x: [12, 31, 50, 69, 88][i],
-                        y: 58,
-                        size: 248,
-                        r: [-3, 2, 0, -2, 3][i],
-                      }
+                  : family === "heads"
+                    ? { x: 0, y: 0, size: 124, r: 0 }
                     : positions[i];
               return (
                 <button
@@ -251,10 +246,10 @@ export default function Canvas() {
         {info && (
           <div className="canvas-info" role="status">
             <span>
-              29 SVG characters across four families. Every one looks left,
+              40 SVG characters across four families. Every one looks left,
               right, up and down, blinks, and breaks into a smile. Save or copy
               any character with its animation built in. Reduced motion is
-              respected. Dots, Grok Bots and Muse are reference-inspired vector
+              respected. Dots, Grok Bots and Heads are reference-inspired vector
               recreations, not official assets.
             </span>
             <a

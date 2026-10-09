@@ -107,11 +107,22 @@ test("every standalone export includes motion; mobile stays on the canvas", asyn
     "dot-frog",
     "dot-scholar",
     "dot-heart",
-    "muse-punk",
-    "muse-pigeon",
-    "muse-cowboy",
-    "muse-yeti",
-    "muse-scientist",
+    "head-slick",
+    "head-fringe",
+    "head-curly",
+    "head-wideeyes",
+    "head-racer-green",
+    "head-racer-red",
+    "head-aviator-teal",
+    "head-pilot-goggles",
+    "head-tv-red",
+    "head-tv-mint",
+    "head-cyber-lime",
+    "head-bubble-space",
+    "head-happy",
+    "head-orbit-white",
+    "head-explorer",
+    "head-cosmo",
   ]) {
     const response = await request.get(`/avatars/${id}.svg`);
     expect(response.ok()).toBe(true);
@@ -144,7 +155,7 @@ test("all four families render their artwork, animate and export valid SVGs", as
   await page.goto("/");
   for (const [family, count, last] of [
     ["Dots", 4, "Velvet"],
-    ["Muse", 5, "Professor"],
+    ["Heads", 16, "Cosmo"],
     ["Grok Bots", 8, "Tide"],
     ["Originals", 12, "Flash"],
   ] as const) {
@@ -176,7 +187,7 @@ test("all four families render their artwork, animate and export valid SVGs", as
     ).toBe(true);
     expect(markup).toContain("pal-grin");
   }
-  await page.getByRole("button", { name: "Muse 5", exact: true }).click();
+  await page.getByRole("button", { name: "Heads 16", exact: true }).click();
   await page.emulateMedia({ reducedMotion: "reduce" });
   expect(
     await page
@@ -187,7 +198,7 @@ test("all four families render their artwork, animate and export valid SVGs", as
   await page.setViewportSize({ width: 390, height: 844 });
   for (const [family, count] of [
     ["Dots", 4],
-    ["Muse", 5],
+    ["Heads", 16],
     ["Grok Bots", 8],
     ["Originals", 12],
   ] as const) {
@@ -202,4 +213,42 @@ test("all four families render their artwork, animate and export valid SVGs", as
     await expect(page.locator(".canvas-character")).toHaveCount(count);
   }
   expect(errors).toEqual([]);
+});
+
+test("Muse is removed and all sixteen heads export", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/");
+  await expect(page.getByRole("button", { name: /Muse/ })).toHaveCount(0);
+  await page.getByRole("button", { name: "Heads 16", exact: true }).click();
+  await expect(page.locator(".canvas-character")).toHaveCount(16);
+  expect((await request.get("/avatars/muse-punk.svg")).status()).toBe(404);
+  for (const name of [
+    "Green Racer",
+    "Goggles",
+    "Red TV",
+    "Bubble Pilot",
+    "Orbit Pilot",
+    "Cosmo",
+  ]) {
+    await page
+      .getByRole("button", { name: `Select ${name}`, exact: true })
+      .click();
+    await expect(page.locator(".selected-caption h2")).toContainText(name);
+  }
+  await page.screenshot({
+    path: "/workspace/scratch/heads-desktop.png",
+    fullPage: true,
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: "/workspace/scratch/heads-mobile.png",
+    fullPage: true,
+  });
 });

@@ -6,12 +6,22 @@ const animation = ts
   })
   .outputText.replace("export const", "const");
 const art = ts
-  .transpileModule(readFileSync("lib/character-art.ts", "utf8"), {
+  .transpileModule(
+    readFileSync("lib/character-art.ts", "utf8").replace(/import[^;]+;/g, ""),
+    {
+      compilerOptions: { module: ts.ModuleKind.ESNext },
+    },
+  )
+  .outputText.replace(/export /g, "");
+const heads = ts
+  .transpileModule(readFileSync("lib/head-art.ts", "utf8"), {
     compilerOptions: { module: ts.ModuleKind.ESNext },
   })
   .outputText.replace(/export /g, "");
 const source =
   animation +
+  "\n" +
+  heads +
   "\n" +
   art +
   "\n" +
