@@ -19,5 +19,10 @@
 @keyframes pal-work{50%{transform:translateY(-3px) rotate(2deg)}}
 @keyframes pal-celebrate{35%{transform:translateY(-7px) rotate(-4deg)}70%{transform:translateY(-2px) rotate(3deg)}}
 @keyframes pal-shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
-@media(prefers-reduced-motion:reduce){.svg-pal .pal-body,.svg-pal .pal-eyes,.svg-pal .pal-pupils,.svg-pal .pal-smile,.svg-pal .pal-grin,.svg-pal .pal-cheeks{animation:none!important}}
+.svg-pal.pal-muse .pal-body{transform-origin:80px 110px}
+.svg-pal.pal-muse .pal-eyes,.svg-pal.pal-dots .pal-eyes{transform-box:fill-box;transform-origin:center}
+.svg-pal.pal-muse .pal-smile{transform-box:fill-box;transform-origin:center}
+.svg-pal .pal-prop{transform-origin:25px 110px;animation:pal-wave 6s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
+@keyframes pal-wave{0%,60%,100%{transform:rotate(0)}70%,85%{transform:rotate(-8deg)}77%,92%{transform:rotate(4deg)}}
+@media(prefers-reduced-motion:reduce){.svg-pal .pal-prop,.svg-pal .pal-body,.svg-pal .pal-eyes,.svg-pal .pal-pupils,.svg-pal .pal-smile,.svg-pal .pal-grin,.svg-pal .pal-cheeks{animation:none!important}}
 </style><g class="pal-body"><path d="M23 25L81 33L85 18L114 64L80 105L79 87C50 91 27 83 8 72Z" fill="#20221f" transform="translate(1 3)"/><path d="M23 25L81 33L85 18L114 64L80 105L79 87C50 91 27 83 8 72Z" fill="#FF7446"/><g class="pal-eyes"><ellipse cx="47" cy="53" rx="11" ry="15" fill="white"/><ellipse cx="76" cy="52" rx="11" ry="15" fill="white"/><g class="pal-pupils"><ellipse cx="47" cy="54" rx="6.5" ry="10.5" fill="#171916"/><ellipse cx="76" cy="53" rx="6.5" ry="10.5" fill="#171916"/></g></g><g class="pal-cheeks" fill="#ef5880"><ellipse cx="35" cy="72" rx="7" ry="4"/><ellipse cx="87" cy="71" rx="7" ry="4"/></g><path class="pal-smile" d="M48 77Q62 87 77 74" fill="none" stroke="#171916" stroke-width="3.5" stroke-linecap="round"/><g class="pal-grin"><path d="M47 74Q62 81 78 72Q75 94 62 91Q49 91 47 74Z" fill="#171916"/><path d="M55 87Q62 83 70 86Q62 94 55 87Z" fill="#ef7e8a"/></g></g></svg>

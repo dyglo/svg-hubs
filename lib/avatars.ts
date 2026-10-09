@@ -1,4 +1,5 @@
 import { avatarAnimationCss } from "./avatar-animation";
+import { characterArt } from "./character-art";
 export type AvatarState = "idle" | "thinking" | "working" | "success" | "error";
 export const states: AvatarState[] = [
   "idle",
@@ -92,17 +93,168 @@ export const avatars = [
     description: "Small spark. Big momentum.",
     path: "M32 13L106 13L87 70L103 70L65 111L70 86L12 86Z",
   },
+  {
+    id: "grok-cloud",
+    name: "Clover",
+    color: "#00CA79",
+    description: "A little green cloud.",
+    path: "",
+    family: "grok",
+  },
+  {
+    id: "grok-orb",
+    name: "Orbit",
+    color: "#FB249C",
+    description: "Pink and perfectly round.",
+    path: "",
+    family: "grok",
+  },
+  {
+    id: "grok-amber",
+    name: "Cocoa",
+    color: "#A56C37",
+    description: "Quietly curious.",
+    path: "",
+    family: "grok",
+  },
+  {
+    id: "grok-violet",
+    name: "Violet",
+    color: "#A44DFF",
+    description: "A purple little daydream.",
+    path: "",
+    family: "grok",
+  },
+  {
+    id: "grok-sun",
+    name: "Sunny",
+    color: "#FFAD00",
+    description: "Always on the bright side.",
+    path: "",
+    family: "grok",
+  },
+  {
+    id: "grok-cube",
+    name: "Pixel",
+    color: "#1686FF",
+    description: "A blue square with a point of view.",
+    path: "",
+    family: "grok",
+  },
+  {
+    id: "grok-hex",
+    name: "Hex",
+    color: "#FF7407",
+    description: "Six sides. Plenty of personality.",
+    path: "",
+    family: "grok",
+  },
+  {
+    id: "grok-teal",
+    name: "Tide",
+    color: "#00BDA5",
+    description: "Easygoing in turquoise.",
+    path: "",
+    family: "grok",
+  },
+  {
+    id: "dot-beret",
+    name: "Bleu",
+    color: "#2D96E5",
+    description: "A blue cloud in a black beret.",
+    path: "",
+    family: "dots",
+  },
+  {
+    id: "dot-frog",
+    name: "Sprout",
+    color: "#A4CE44",
+    description: "Wide-eyed, lime-green company.",
+    path: "",
+    family: "dots",
+  },
+  {
+    id: "dot-scholar",
+    name: "Goldie",
+    color: "#F4C448",
+    description: "Golden, thoughtful, and bespectacled.",
+    path: "",
+    family: "dots",
+  },
+  {
+    id: "dot-heart",
+    name: "Velvet",
+    color: "#E94BB0",
+    description: "A pink heart with shades.",
+    path: "",
+    family: "dots",
+  },
+  {
+    id: "muse-punk",
+    name: "Rebel",
+    color: "#E0D4C3",
+    description: "Blue mohawk. Leather jacket. Soft heart.",
+    path: "",
+    family: "muse",
+  },
+  {
+    id: "muse-pigeon",
+    name: "Pip",
+    color: "#A6A5AB",
+    description: "A pigeon with a little attitude.",
+    path: "",
+    family: "muse",
+  },
+  {
+    id: "muse-cowboy",
+    name: "Rodeo",
+    color: "#DFCDB7",
+    description: "A hat, a bandana, and a friendly wave.",
+    path: "",
+    family: "muse",
+  },
+  {
+    id: "muse-yeti",
+    name: "Flurry",
+    color: "#C6E1E5",
+    description: "A fluffy snow friend with a pink bow.",
+    path: "",
+    family: "muse",
+  },
+  {
+    id: "muse-scientist",
+    name: "Professor",
+    color: "#A56AC4",
+    description: "Purple ears. Goggles. Fresh ideas.",
+    path: "",
+    family: "muse",
+  },
 ] as const;
 export type AvatarId = (typeof avatars)[number]["id"];
 export function getAvatar(id: string) {
   return avatars.find((a) => a.id === id) ?? avatars[0];
 }
-export function avatarSvg(id: string, color?: string) {
+export function avatarSvg(id: string, color?: string, prefix?: string) {
   const a = getAvatar(id);
   const fill = /^#[0-9a-f]{6}$/i.test(color ?? "") ? color : a.color;
+  if ("family" in a) {
+    const art = characterArt(a.id, fill!, prefix || a.id);
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${art.viewBox}" class="svg-pal pal-${art.family}" role="img" aria-label="${a.name}, animated character"><style>${avatarAnimationCss}</style>${art.defs}<g class="pal-body">${art.body}</g></svg>`;
+  }
   const details =
     a.id === "hand"
       ? '<path d="M61 22L55 41M78 35L74 47" fill="none" stroke="#171916" stroke-width="3" stroke-linecap="round"/>'
       : "";
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" class="svg-pal" role="img" aria-label="${a.name}, animated character"><style>${avatarAnimationCss}</style><g class="pal-body"><path d="${a.path}" fill="#20221f" transform="translate(1 3)"/><path d="${a.path}" fill="${fill}"/>${details}<g class="pal-eyes"><ellipse cx="47" cy="53" rx="11" ry="15" fill="white"/><ellipse cx="76" cy="52" rx="11" ry="15" fill="white"/><g class="pal-pupils"><ellipse cx="47" cy="54" rx="6.5" ry="10.5" fill="#171916"/><ellipse cx="76" cy="53" rx="6.5" ry="10.5" fill="#171916"/></g></g><g class="pal-cheeks" fill="#ef5880"><ellipse cx="35" cy="72" rx="7" ry="4"/><ellipse cx="87" cy="71" rx="7" ry="4"/></g><path class="pal-smile" d="M48 77Q62 87 77 74" fill="none" stroke="#171916" stroke-width="3.5" stroke-linecap="round"/><g class="pal-grin"><path d="M47 74Q62 81 78 72Q75 94 62 91Q49 91 47 74Z" fill="#171916"/><path d="M55 87Q62 83 70 86Q62 94 55 87Z" fill="#ef7e8a"/></g></g></svg>`;
+}
+
+export type CharacterFamily = "originals" | "grok" | "dots" | "muse";
+export const families = [
+  { id: "originals", label: "Originals" },
+  { id: "grok", label: "Grok Bots" },
+  { id: "dots", label: "Dots" },
+  { id: "muse", label: "Muse" },
+] as const;
+export function familyOf(avatar: (typeof avatars)[number]): CharacterFamily {
+  return "family" in avatar ? avatar.family : "originals";
 }

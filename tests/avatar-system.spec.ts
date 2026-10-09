@@ -8,6 +8,7 @@ test("one canvas has twelve automatically animated characters and exports their 
   page.on("pageerror", (e) => errors.push(e.message));
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.goto("/");
+  await page.getByRole("button", { name: "Originals 12", exact: true }).click();
   await expect(page.locator(".canvas-character")).toHaveCount(12);
   await expect(
     page.getByRole("button", { name: "thinking", exact: true }),
@@ -94,6 +95,23 @@ test("every standalone export includes motion; mobile stays on the canvas", asyn
     "chat",
     "arrow",
     "bolt",
+    "grok-cloud",
+    "grok-orb",
+    "grok-amber",
+    "grok-violet",
+    "grok-sun",
+    "grok-cube",
+    "grok-hex",
+    "grok-teal",
+    "dot-beret",
+    "dot-frog",
+    "dot-scholar",
+    "dot-heart",
+    "muse-punk",
+    "muse-pigeon",
+    "muse-cowboy",
+    "muse-yeti",
+    "muse-scientist",
   ]) {
     const response = await request.get(`/avatars/${id}.svg`);
     expect(response.ok()).toBe(true);
@@ -101,6 +119,7 @@ test("every standalone export includes motion; mobile stays on the canvas", asyn
   }
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
+  await page.getByRole("button", { name: "Originals 12", exact: true }).click();
   await expect(page.locator(".canvas-character")).toHaveCount(12);
   expect(
     await page.evaluate(
@@ -113,4 +132,74 @@ test("every standalone export includes motion; mobile stays on the canvas", asyn
     path: "/workspace/scratch/canvas-mobile.png",
     fullPage: true,
   });
+});
+
+test("all four families render their artwork, animate and export valid SVGs", async ({
+  page,
+  context,
+}) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto("/");
+  for (const [family, count, last] of [
+    ["Dots", 4, "Velvet"],
+    ["Muse", 5, "Professor"],
+    ["Grok Bots", 8, "Tide"],
+    ["Originals", 12, "Flash"],
+  ] as const) {
+    await page
+      .getByRole("button", { name: `${family} ${count}`, exact: true })
+      .click();
+    await expect(page.locator(".canvas-character")).toHaveCount(count);
+    const ids = await page
+      .locator(".canvas-characters [id]")
+      .evaluateAll((elements) => elements.map((e) => e.id));
+    expect(new Set(ids).size).toBe(ids.length);
+    for (const el of await page.locator(".pal-pupils").all())
+      expect(await el.evaluate((e) => getComputedStyle(e).animationName)).toBe(
+        "pal-look",
+      );
+    await page
+      .getByRole("button", { name: `Select ${last}`, exact: true })
+      .click();
+    await page.getByRole("button", { name: "Copy SVG", exact: true }).click();
+    const markup = await page.evaluate(() => navigator.clipboard.readText());
+    expect(
+      await page.evaluate(
+        (s) =>
+          new DOMParser()
+            .parseFromString(s, "image/svg+xml")
+            .querySelector("parsererror") === null,
+        markup,
+      ),
+    ).toBe(true);
+    expect(markup).toContain("pal-grin");
+  }
+  await page.getByRole("button", { name: "Muse 5", exact: true }).click();
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  expect(
+    await page
+      .locator(".pal-body")
+      .first()
+      .evaluate((e) => getComputedStyle(e).animationName),
+  ).toBe("none");
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const [family, count] of [
+    ["Dots", 4],
+    ["Muse", 5],
+    ["Grok Bots", 8],
+    ["Originals", 12],
+  ] as const) {
+    await page
+      .getByRole("button", { name: `${family} ${count}`, exact: true })
+      .click();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+    await expect(page.locator(".canvas-character")).toHaveCount(count);
+  }
+  expect(errors).toEqual([]);
 });

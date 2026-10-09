@@ -576,3 +576,190 @@ p {
     scroll-behavior: auto;
   }
 }
+/* Four families, still one open canvas. */
+.family-nav {
+  display: flex;
+  justify-content: center;
+  gap: 26px;
+  padding: 5px 0 12px;
+  flex-shrink: 0;
+}
+.family-nav button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 0;
+  font-size: 10px;
+  color: #8a887b;
+  position: relative;
+}
+.family-nav button > span {
+  font-size: 7px;
+  color: #aaa797;
+}
+.family-nav button[aria-pressed="true"] {
+  color: #303229;
+}
+.family-nav button[aria-pressed="true"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #969c85;
+}
+.family-dots .canvas-title,
+.family-muse .canvas-title {
+  top: 5%;
+  width: 500px;
+}
+.family-dots .canvas-title h1,
+.family-muse .canvas-title h1 {
+  font-size: 42px;
+  line-height: 1.1;
+}
+.family-dots .doodle-arrow,
+.family-muse .doodle-arrow {
+  left: 47%;
+  top: 35%;
+  width: 55px;
+  transform: rotate(30deg);
+}
+.family-dots .doodle-spark,
+.family-muse .doodle-spark {
+  left: 90%;
+  top: 25%;
+}
+.family-dots .canvas-character:hover .agent-avatar,
+.family-muse .canvas-character:hover .agent-avatar {
+  transform: scale(1.04);
+}
+.family-muse .character-name {
+  bottom: -14px;
+}
+.family-muse .canvas-character.is-selected::after {
+  bottom: -23px;
+}
+@media (min-width: 1450px) {
+  .family-dots .canvas-character,
+  .family-muse .canvas-character {
+    width: calc(var(--character-size) * 1.14);
+    height: calc(var(--character-size) * 1.14);
+  }
+}
+@media (max-width: 1100px) and (min-width: 601px) {
+  .family-muse .canvas-character {
+    width: calc(var(--character-size) * 0.73);
+    height: calc(var(--character-size) * 0.73);
+  }
+  .family-dots .canvas-character {
+    width: calc(var(--character-size) * 0.8);
+    height: calc(var(--character-size) * 0.8);
+  }
+}
+@media (max-width: 600px) {
+  .family-nav {
+    gap: 20px;
+    padding: 2px 0 14px;
+  }
+  .family-nav button {
+    font-size: 9px;
+  }
+  .family-nav button > span {
+    font-size: 6px;
+  }
+  .family-dots .canvas-title,
+  .family-muse .canvas-title {
+    top: 2%;
+    width: 290px;
+  }
+  .family-dots .canvas-title h1,
+  .family-muse .canvas-title h1 {
+    font-size: 30px;
+  }
+  .family-dots .canvas-characters {
+    top: 155px;
+    bottom: 35px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 25px 12px;
+  }
+  .family-dots .canvas-character {
+    width: 131px;
+    height: 131px;
+  }
+  .family-muse .canvas-characters {
+    top: 155px;
+    bottom: 38px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 23px 2px;
+  }
+  .family-muse .canvas-character {
+    width: 104px;
+    height: 140px;
+  }
+  .family-muse .canvas-character:nth-child(4) {
+    grid-column: 1;
+    transform: translateX(35px) rotate(-2deg);
+  }
+  .family-muse .canvas-character:nth-child(5) {
+    grid-column: 3;
+    transform: translateX(-35px) rotate(3deg);
+  }
+  .family-dots .doodle-arrow,
+  .family-muse .doodle-arrow {
+    top: 23%;
+    left: 12%;
+    width: 36px;
+  }
+  .family-dots .doodle-spark,
+  .family-muse .doodle-spark {
+    top: 24%;
+    left: 87%;
+  }
+  .family-grok .canvas-characters {
+    grid-template-rows: repeat(3, 1fr);
+    gap: 24px 6px;
+  }
+  .family-grok .canvas-character {
+    width: 76px;
+    height: 76px;
+  }
+}
+@media (max-width: 360px) {
+  .family-muse .canvas-character {
+    width: 88px;
+    height: 124px;
+  }
+  .family-dots .canvas-character {
+    width: 118px;
+    height: 118px;
+  }
+  .family-nav {
+    gap: 15px;
+  }
+}
+.family-dots .canvas-title h1,
+.family-muse .canvas-title h1,
+.family-grok .canvas-title h1 {
+  margin: 12px 0;
+  font-size: 42px;
+  line-height: 1.1;
+}
+.family-dots .canvas-title,
+.family-muse .canvas-title {
+  top: 7%;
+}
+@media (max-width: 600px) {
+  .family-dots .canvas-title h1,
+  .family-muse .canvas-title h1,
+  .family-grok .canvas-title h1 {
+    font-size: 33px;
+  }
+  .family-dots .canvas-title,
+  .family-muse .canvas-title {
+    top: 3%;
+  }
+}

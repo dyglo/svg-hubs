@@ -2,7 +2,15 @@
 import { useEffect, useState } from "react";
 import { ArrowDown, ArrowUpRight, Check, Copy, RotateCcw } from "lucide-react";
 import AgentAvatar from "./AgentAvatar";
-import { avatars, avatarSvg, type AvatarId, getAvatar } from "@/lib/avatars";
+import {
+  avatars,
+  avatarSvg,
+  type AvatarId,
+  getAvatar,
+  families,
+  familyOf,
+  type CharacterFamily,
+} from "@/lib/avatars";
 const positions = [
   { x: 14, y: 20, size: 112, r: -10 },
   { x: 28, y: 18, size: 105, r: 7 },
@@ -26,7 +34,9 @@ const palette = [
   "#43CC46",
 ];
 export default function Canvas() {
-  const [selected, setSelected] = useState<AvatarId>("star");
+  const [family, setFamily] = useState<CharacterFamily>("dots");
+  const [selected, setSelected] = useState<AvatarId>("dot-beret");
+  const visible = avatars.filter((v) => familyOf(v) === family);
   const [colors, setColors] = useState<Record<string, string>>({});
   const [notice, setNotice] = useState("");
   const [info, setInfo] = useState(false);
@@ -76,13 +86,49 @@ export default function Canvas() {
             {info ? "Close" : "Information"} <ArrowUpRight size={12} />
           </button>
         </header>
-        <section className="playground" aria-label="Animated character canvas">
+        <nav className="family-nav" aria-label="Character families">
+          {families.map((f) => (
+            <button
+              key={f.id}
+              aria-pressed={family === f.id}
+              onClick={() => {
+                setFamily(f.id);
+                setSelected(avatars.find((v) => familyOf(v) === f.id)!.id);
+              }}
+            >
+              {f.label}
+              <span>{avatars.filter((v) => familyOf(v) === f.id).length}</span>
+            </button>
+          ))}
+        </nav>
+        <section
+          className={`playground family-${family}`}
+          aria-label="Animated character canvas"
+        >
           <div className="canvas-title">
-            <span>A FEW FRIENDLY FACES</span>
+            <span>
+              {family === "originals"
+                ? "A FEW FRIENDLY FACES"
+                : family === "dots"
+                  ? "SOFT SHAPES. SERIOUS PERSONALITY."
+                  : family === "muse"
+                    ? "A LITTLE MORE CHARACTER"
+                    : "SMALL BOTS. BIG ENERGY."}
+            </span>
             <h1>
-              Make room for
-              <br />
-              <em>a little character.</em>
+              {family === "dots" ? (
+                "The Dots."
+              ) : family === "muse" ? (
+                "Meet your Muse."
+              ) : family === "grok" ? (
+                "Small bots. Big spirit."
+              ) : (
+                <>
+                  Make room for
+                  <br />
+                  <em>a little character.</em>
+                </>
+              )}
             </h1>
             <p>Pick a friend. Take them with you.</p>
           </div>
@@ -101,8 +147,23 @@ export default function Canvas() {
             <path d="M22 3L22 12M22 32L22 42M3 22L12 22M32 22L42 22M8 8L14 14M31 31L37 37M8 37L14 31M31 14L37 8" />
           </svg>
           <div className="canvas-characters">
-            {avatars.map((v, i) => {
-              const p = positions[i];
+            {visible.map((v, i) => {
+              const p =
+                family === "dots"
+                  ? {
+                      x: [17, 39, 61, 83][i],
+                      y: 57,
+                      size: 232,
+                      r: [-6, 2, -2, 6][i],
+                    }
+                  : family === "muse"
+                    ? {
+                        x: [12, 31, 50, 69, 88][i],
+                        y: 58,
+                        size: 248,
+                        r: [-3, 2, 0, -2, 3][i],
+                      }
+                    : positions[i];
               return (
                 <button
                   key={v.id}
@@ -159,7 +220,7 @@ export default function Canvas() {
               className="reset-button"
               onClick={() => {
                 setColors({});
-                setSelected("star");
+                setSelected(visible[0].id);
                 setNotice("Back to their colorful selves.");
               }}
               aria-label="Reset characters"
@@ -190,9 +251,11 @@ export default function Canvas() {
         {info && (
           <div className="canvas-info" role="status">
             <span>
-              12 original SVG friends. Every one looks left, right, up and down,
-              blinks, and breaks into a smile. Save or copy any character with
-              its animation built in. Reduced motion is respected.
+              29 SVG characters across four families. Every one looks left,
+              right, up and down, blinks, and breaks into a smile. Save or copy
+              any character with its animation built in. Reduced motion is
+              respected. Dots, Grok Bots and Muse are reference-inspired vector
+              recreations, not official assets.
             </span>
             <a
               href="https://github.com/dyglo/svg-hubs"

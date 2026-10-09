@@ -1,4 +1,10 @@
-import { getAvatar, type AvatarId, type AvatarState } from "@/lib/avatars";
+import { useId } from "react";
+import {
+  avatarSvg,
+  getAvatar,
+  type AvatarId,
+  type AvatarState,
+} from "@/lib/avatars";
 import { avatarAnimationCss } from "@/lib/avatar-animation";
 import type { CSSProperties } from "react";
 export interface AgentAvatarProps {
@@ -24,6 +30,37 @@ export default function AgentAvatar({
 }: AgentAvatarProps) {
   const a = getAvatar(avatarId);
   const fill = /^#[0-9a-f]{6}$/i.test(color ?? "") ? color : a.color;
+  const prefix = useId().replace(/[^a-zA-Z0-9_-]/g, "");
+  if ("family" in a) {
+    const safeName = (name || a.name).replace(
+      /[&<>"']/g,
+      (c) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&apos;",
+        })[c]!,
+    );
+    const markup = avatarSvg(a.id, fill, prefix)
+      .replace(
+        `${a.name}, animated character`,
+        `${safeName}, animated character`,
+      )
+      .replace(
+        'class="svg-pal ',
+        `style="--pal-delay:${delay}s" data-state="${state}" class="svg-pal `,
+      )
+      .replace('role="img"', decorative ? 'aria-hidden="true"' : 'role="img"');
+    return (
+      <span
+        className={`agent-avatar ${className}`}
+        style={{ width: size, height: size }}
+        dangerouslySetInnerHTML={{ __html: markup }}
+      />
+    );
+  }
   return (
     <span
       className={`agent-avatar ${className}`}

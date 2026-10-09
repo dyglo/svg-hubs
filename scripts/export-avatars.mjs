@@ -5,11 +5,18 @@ const animation = ts
     compilerOptions: { module: ts.ModuleKind.ESNext },
   })
   .outputText.replace("export const", "const");
+const art = ts
+  .transpileModule(readFileSync("lib/character-art.ts", "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.ESNext },
+  })
+  .outputText.replace(/export /g, "");
 const source =
   animation +
   "\n" +
+  art +
+  "\n" +
   ts.transpileModule(
-    readFileSync("lib/avatars.ts", "utf8").replace(/import[^;]+;/, ""),
+    readFileSync("lib/avatars.ts", "utf8").replace(/import[^;]+;/g, ""),
     {
       compilerOptions: { module: ts.ModuleKind.ESNext },
     },
