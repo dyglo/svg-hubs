@@ -24,5 +24,9 @@ export const avatarAnimationCss = `
 .svg-pal.pal-heads .pal-smile{transform-box:fill-box;transform-origin:center}
 .svg-pal .pal-prop{transform-origin:25px 110px;animation:pal-wave 6s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
 @keyframes pal-wave{0%,60%,100%{transform:rotate(0)}70%,85%{transform:rotate(-8deg)}77%,92%{transform:rotate(4deg)}}
-@media(prefers-reduced-motion:reduce){.svg-pal .pal-prop,.svg-pal .pal-body,.svg-pal .pal-eyes,.svg-pal .pal-pupils,.svg-pal .pal-smile,.svg-pal .pal-grin,.svg-pal .pal-cheeks{animation:none!important}}
+.svg-pal .pal-symbol{transform-origin:60px 60px;animation:pal-symbol 5s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
+.svg-pal .pal-clock{transform-origin:60px 60px;animation:pal-clock 16s linear infinite}
+@keyframes pal-symbol{0%,100%{transform:rotate(-3deg) scale(1)}50%{transform:rotate(3deg) scale(1.04)}}
+@keyframes pal-clock{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.svg-pal .pal-symbol,.svg-pal .pal-clock,.svg-pal .pal-prop,.svg-pal .pal-body,.svg-pal .pal-eyes,.svg-pal .pal-pupils,.svg-pal .pal-smile,.svg-pal .pal-grin,.svg-pal .pal-cheeks{animation:none!important}}
 `;

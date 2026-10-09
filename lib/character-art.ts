@@ -1,3 +1,4 @@
+import { stickerArtwork } from "./sticker-art";
 import { headArtwork } from "./head-art";
 /** Hand-drawn vector artwork. Shared by previews and self-contained exports. */
 const path = (d: string, fill: string, extra = "") =>
@@ -49,6 +50,7 @@ export function characterArt(
   color: string,
   prefix: string,
 ): { defs: string; body: string; viewBox: string; family: string } {
+  if (id.startsWith("sticker-")) return stickerArtwork(id, color);
   if (id.startsWith("head-")) return headArtwork(id, color, prefix);
   if (id.startsWith("grok-")) {
     const shapes: Record<string, string> = {

@@ -317,6 +317,134 @@ export const avatars = [
     path: "",
     family: "heads",
   },
+  {
+    id: "sticker-smiley",
+    name: "Smiley",
+    color: "#FF7845",
+    description: "A smile worth sharing.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-sunburst",
+    name: "Sunbeam",
+    color: "#9686F4",
+    description: "A spiky little ray of sunshine.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-half-moon",
+    name: "Half Moon",
+    color: "#FF7845",
+    description: "A little bowl of happiness.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-thumbs-up",
+    name: "Thumbs Up",
+    color: "#49CC48",
+    description: "A small sign of encouragement.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-applause",
+    name: "Applause",
+    color: "#FFD84C",
+    description: "A round of applause.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-globe",
+    name: "World Wide",
+    color: "#72BAE4",
+    description: "A world of possibilities.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-question",
+    name: "Curious",
+    color: "#A899F7",
+    description: "A very good question.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-exclaim",
+    name: "Listen Up",
+    color: "#FF7845",
+    description: "A little punctuation with presence.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-clock",
+    name: "Tick Tock",
+    color: "#72BAE4",
+    description: "Good things take a little time.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-heart",
+    name: "Big Heart",
+    color: "#F24283",
+    description: "A little more love.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-star",
+    name: "Gold Star",
+    color: "#FFDA42",
+    description: "A star for your next big idea.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-good-job",
+    name: "Good Job",
+    color: "#9686F4",
+    description: "A well-earned little celebration.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-do-good",
+    name: "Do Good",
+    color: "#56D1C6",
+    description: "Good energy, ready to share.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-squiggle",
+    name: "Squiggle",
+    color: "#9686F4",
+    description: "An unexpected turn for the better.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-confetti",
+    name: "Confetti",
+    color: "#43C647",
+    description: "A pocket-sized party.",
+    path: "",
+    family: "stickers",
+  },
+  {
+    id: "sticker-paperclips",
+    name: "Paperclips",
+    color: "#9287F0",
+    description: "Keeping good ideas together.",
+    path: "",
+    family: "stickers",
+  },
 ] as const;
 export type AvatarId = (typeof avatars)[number]["id"];
 export function getAvatar(id: string) {
@@ -336,12 +464,14 @@ export function avatarSvg(id: string, color?: string, prefix?: string) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" class="svg-pal" role="img" aria-label="${a.name}, animated character"><style>${avatarAnimationCss}</style><g class="pal-body"><path d="${a.path}" fill="#20221f" transform="translate(1 3)"/><path d="${a.path}" fill="${fill}"/>${details}<g class="pal-eyes"><ellipse cx="47" cy="53" rx="11" ry="15" fill="white"/><ellipse cx="76" cy="52" rx="11" ry="15" fill="white"/><g class="pal-pupils"><ellipse cx="47" cy="54" rx="6.5" ry="10.5" fill="#171916"/><ellipse cx="76" cy="53" rx="6.5" ry="10.5" fill="#171916"/></g></g><g class="pal-cheeks" fill="#ef5880"><ellipse cx="35" cy="72" rx="7" ry="4"/><ellipse cx="87" cy="71" rx="7" ry="4"/></g><path class="pal-smile" d="M48 77Q62 87 77 74" fill="none" stroke="#171916" stroke-width="3.5" stroke-linecap="round"/><g class="pal-grin"><path d="M47 74Q62 81 78 72Q75 94 62 91Q49 91 47 74Z" fill="#171916"/><path d="M55 87Q62 83 70 86Q62 94 55 87Z" fill="#ef7e8a"/></g></g></svg>`;
 }
 
-export type CharacterFamily = "originals" | "grok" | "dots" | "heads";
+export type CharacterFamily =
+  "originals" | "grok" | "dots" | "heads" | "stickers";
 export const families = [
   { id: "originals", label: "Originals" },
   { id: "grok", label: "Grok Bots" },
   { id: "dots", label: "Dots" },
   { id: "heads", label: "Heads" },
+  { id: "stickers", label: "Stickers & Symbols" },
 ] as const;
 export function familyOf(avatar: (typeof avatars)[number]): CharacterFamily {
   return "family" in avatar ? avatar.family : "originals";

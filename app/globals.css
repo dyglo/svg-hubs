@@ -577,38 +577,6 @@ p {
   }
 }
 /* Four families, still one open canvas. */
-.family-nav {
-  display: flex;
-  justify-content: center;
-  gap: 26px;
-  padding: 5px 0 12px;
-  flex-shrink: 0;
-}
-.family-nav button {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 0;
-  font-size: 10px;
-  color: #8a887b;
-  position: relative;
-}
-.family-nav button > span {
-  font-size: 7px;
-  color: #aaa797;
-}
-.family-nav button[aria-pressed="true"] {
-  color: #303229;
-}
-.family-nav button[aria-pressed="true"]::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: #969c85;
-}
 .family-dots .canvas-title,
 .family-heads .canvas-title {
   top: 5%;
@@ -659,16 +627,6 @@ p {
   }
 }
 @media (max-width: 600px) {
-  .family-nav {
-    gap: 20px;
-    padding: 2px 0 14px;
-  }
-  .family-nav button {
-    font-size: 9px;
-  }
-  .family-nav button > span {
-    font-size: 6px;
-  }
   .family-dots .canvas-title,
   .family-heads .canvas-title {
     top: 2%;
@@ -736,9 +694,6 @@ p {
   .family-dots .canvas-character {
     width: 118px;
     height: 118px;
-  }
-  .family-nav {
-    gap: 15px;
   }
 }
 .family-dots .canvas-title h1,
@@ -847,6 +802,170 @@ p {
     left: 7%;
   }
   .family-heads .doodle-spark {
+    top: 12%;
+    left: 85%;
+  }
+}
+.collection-filter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  padding: 7px 0 15px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+.collection-filter > label,
+.collection-filter > span {
+  font-size: 8px;
+  color: #8a897d;
+}
+.collection-select {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.collection-select select {
+  font: inherit;
+  font-size: 10px;
+  appearance: none;
+  background: #f0f0e7;
+  color: #454a3c;
+  border: 1px solid #d5d9cb;
+  border-radius: 20px;
+  padding: 9px 34px 9px 15px;
+  cursor: pointer;
+  min-width: 160px;
+}
+.collection-select > svg {
+  position: absolute;
+  right: 13px;
+  pointer-events: none;
+  color: #7a826c;
+}
+.collection-select select:focus-visible {
+  outline: 2px solid #6f8757;
+  outline-offset: 3px;
+}
+.playground {
+  overflow: hidden;
+}
+.character-arrival {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center bottom;
+}
+.canvas-character .character-arrival > .agent-avatar {
+  width: 100% !important;
+  height: 100% !important;
+}
+.family-stickers {
+  min-height: 790px;
+}
+.family-stickers .canvas-characters {
+  inset: 150px 8% 45px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 22px 30px;
+  align-items: center;
+  justify-items: center;
+}
+.family-stickers .canvas-character,
+.family-stickers .canvas-character:nth-child(n) {
+  position: relative;
+  left: auto !important;
+  top: auto !important;
+  width: 118px;
+  height: 118px;
+  transform: rotate(var(--character-rotation));
+  grid-column: auto;
+}
+.family-stickers .canvas-title {
+  top: 2%;
+  width: 500px;
+}
+.family-stickers .canvas-title h1 {
+  font-size: 39px;
+  margin: 12px 0;
+}
+.family-stickers .character-name {
+  bottom: -14px;
+  font-size: 9px;
+}
+.family-stickers .doodle-arrow {
+  top: 13%;
+  left: 18%;
+  width: 46px;
+}
+.family-stickers .doodle-spark {
+  top: 13%;
+  left: 83%;
+}
+@media (max-width: 900px) {
+  .family-stickers .canvas-characters {
+    left: 2%;
+    right: 2%;
+    gap: 22px 12px;
+  }
+  .family-stickers .canvas-character,
+  .family-stickers .canvas-character:nth-child(n) {
+    width: 108px;
+    height: 108px;
+  }
+}
+@media (max-width: 600px) {
+  .collection-filter {
+    gap: 8px;
+    padding: 3px 0 14px;
+  }
+  .collection-filter > label {
+    font-size: 7px;
+  }
+  .collection-filter > span {
+    display: none;
+  }
+  .collection-select select {
+    font-size: 9px;
+    min-width: 162px;
+    padding: 8px 30px 8px 13px;
+  }
+  .family-stickers {
+    min-height: 810px;
+  }
+  .family-stickers .canvas-title {
+    width: 290px;
+    top: 3%;
+  }
+  .family-stickers .canvas-title h1 {
+    font-size: 30px;
+  }
+  .family-stickers .canvas-characters {
+    inset: 145px 0 35px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 18px 4px;
+  }
+  .family-stickers .canvas-character,
+  .family-stickers .canvas-character:nth-child(n) {
+    width: 78px;
+    height: 78px;
+  }
+  .family-stickers .canvas-character:last-child {
+    grid-column: 2;
+  }
+  .family-stickers .character-name {
+    font-size: 7px;
+    bottom: -9px;
+  }
+  .family-stickers .doodle-arrow {
+    top: 12%;
+    left: 7%;
+  }
+  .family-stickers .doodle-spark {
     top: 12%;
     left: 85%;
   }

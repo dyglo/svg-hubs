@@ -18,8 +18,15 @@ const heads = ts
     compilerOptions: { module: ts.ModuleKind.ESNext },
   })
   .outputText.replace(/export /g, "");
+const stickers = ts
+  .transpileModule(readFileSync("lib/sticker-art.ts", "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.ESNext },
+  })
+  .outputText.replace(/export /g, "");
 const source =
   animation +
+  "\n" +
+  stickers +
   "\n" +
   heads +
   "\n" +

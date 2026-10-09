@@ -1,6 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
-import { ArrowDown, ArrowUpRight, Check, Copy, RotateCcw } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  Check,
+  Copy,
+  RotateCcw,
+  ChevronDown,
+} from "lucide-react";
 import AgentAvatar from "./AgentAvatar";
 import {
   avatars,
@@ -40,6 +47,81 @@ export default function Canvas() {
   const [colors, setColors] = useState<Record<string, string>>({});
   const [notice, setNotice] = useState("");
   const [info, setInfo] = useState(false);
+  const canvasRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (preference.matches || !Element.prototype.animate) return;
+    const bounds = canvas.getBoundingClientRect();
+    const animations = Array.from(
+      canvas.querySelectorAll<HTMLElement>(".character-arrival"),
+    ).map((el, i) => {
+      const rect = el.parentElement!.getBoundingClientRect();
+      const start = -(rect.top - bounds.top + rect.height + 28);
+      const floor = Math.max(0, bounds.bottom - 28 - rect.bottom);
+      const rebound = Math.min(110, bounds.height * 0.18);
+      return el.animate(
+        [
+          {
+            transform: `translateY(${start}px) rotate(-7deg) scale(1)`,
+            opacity: 0,
+            offset: 0,
+            easing: "cubic-bezier(.55,.05,.85,.55)",
+          },
+          {
+            transform: `translateY(${start + 24}px) rotate(-6deg) scale(1)`,
+            opacity: 1,
+            offset: 0.04,
+            easing: "cubic-bezier(.55,.05,.85,.55)",
+          },
+          {
+            transform: `translateY(${floor}px) rotate(0) scale(1.14,.78)`,
+            opacity: 1,
+            offset: 0.34,
+            easing: "cubic-bezier(.15,.7,.35,1)",
+          },
+          {
+            transform: `translateY(${floor - rebound}px) rotate(-3deg) scale(.96,1.05)`,
+            offset: 0.53,
+            easing: "cubic-bezier(.5,0,.85,.5)",
+          },
+          {
+            transform: `translateY(${floor}px) rotate(0) scale(1.07,.88)`,
+            offset: 0.65,
+            easing: "cubic-bezier(.15,.7,.35,1)",
+          },
+          {
+            transform: `translateY(${floor - rebound * 0.4}px) rotate(-1deg) scale(1)`,
+            offset: 0.77,
+            easing: "cubic-bezier(.5,0,.85,.5)",
+          },
+          {
+            transform: `translateY(${floor}px) rotate(0) scale(1.03,.95)`,
+            offset: 0.85,
+            easing: "cubic-bezier(.2,.65,.3,1)",
+          },
+          {
+            transform: "translateY(0) rotate(0) scale(1)",
+            opacity: 1,
+            offset: 1,
+          },
+        ],
+        { duration: 1600, delay: Math.min(i * 23, 320), fill: "both" },
+      );
+    });
+    const cancel = () => animations.forEach((a) => a.cancel());
+    const onPreference = () => {
+      if (preference.matches) cancel();
+    };
+    preference.addEventListener("change", onPreference);
+    window.addEventListener("resize", cancel);
+    return () => {
+      cancel();
+      preference.removeEventListener("change", onPreference);
+      window.removeEventListener("resize", cancel);
+    };
+  }, [family]);
   const a = getAvatar(selected);
   const color = colors[selected] || a.color;
   useEffect(() => {
@@ -86,22 +168,32 @@ export default function Canvas() {
             {info ? "Close" : "Information"} <ArrowUpRight size={12} />
           </button>
         </header>
-        <nav className="family-nav" aria-label="Character families">
-          {families.map((f) => (
-            <button
-              key={f.id}
-              aria-pressed={family === f.id}
-              onClick={() => {
-                setFamily(f.id);
-                setSelected(avatars.find((v) => familyOf(v) === f.id)!.id);
+        <div className="collection-filter">
+          <label htmlFor="collection">Explore the collection</label>
+          <div className="collection-select">
+            <select
+              id="collection"
+              aria-label="Character collection"
+              value={family}
+              onChange={(e) => {
+                const next = e.target.value as CharacterFamily;
+                setFamily(next);
+                setSelected(avatars.find((v) => familyOf(v) === next)!.id);
               }}
             >
-              {f.label}
-              <span>{avatars.filter((v) => familyOf(v) === f.id).length}</span>
-            </button>
-          ))}
-        </nav>
+              {families.map((f) => (
+                <option key={f.id} value={f.id}>
+                  {f.label} ·{" "}
+                  {avatars.filter((v) => familyOf(v) === f.id).length}
+                </option>
+              ))}
+            </select>
+            <ChevronDown size={13} aria-hidden="true" />
+          </div>
+          <span>{avatars.length} little possibilities</span>
+        </div>
         <section
+          ref={canvasRef}
           className={`playground family-${family}`}
           aria-label="Animated character canvas"
         >
@@ -111,13 +203,17 @@ export default function Canvas() {
                 ? "A FEW FRIENDLY FACES"
                 : family === "dots"
                   ? "SOFT SHAPES. SERIOUS PERSONALITY."
-                  : family === "heads"
-                    ? "A LITTLE MORE CHARACTER"
-                    : "SMALL BOTS. BIG ENERGY."}
+                  : family === "stickers"
+                    ? "SMALL SYMBOLS. GOOD ENERGY."
+                    : family === "heads"
+                      ? "A LITTLE MORE CHARACTER"
+                      : "SMALL BOTS. BIG ENERGY."}
             </span>
             <h1>
               {family === "dots" ? (
                 "The Dots."
+              ) : family === "stickers" ? (
+                "Stick a little joy on it."
               ) : family === "heads" ? (
                 "Meet the Heads."
               ) : family === "grok" ? (
@@ -156,7 +252,7 @@ export default function Canvas() {
                       size: 232,
                       r: [-6, 2, -2, 6][i],
                     }
-                  : family === "heads"
+                  : family === "heads" || family === "stickers"
                     ? { x: 0, y: 0, size: 124, r: 0 }
                     : positions[i];
               return (
@@ -175,17 +271,19 @@ export default function Canvas() {
                     } as React.CSSProperties
                   }
                 >
-                  <AgentAvatar
-                    avatarId={v.id}
-                    color={colors[v.id] || v.color}
-                    name={v.name}
-                    size={p.size}
-                    delay={-i * 1.17}
-                    decorative
-                  />
-                  <span className="character-name">
-                    {v.name}
-                    <ArrowUpRight size={11} />
+                  <span className="character-arrival">
+                    <AgentAvatar
+                      avatarId={v.id}
+                      color={colors[v.id] || v.color}
+                      name={v.name}
+                      size={p.size}
+                      delay={-i * 1.17}
+                      decorative
+                    />
+                    <span className="character-name">
+                      {v.name}
+                      <ArrowUpRight size={11} />
+                    </span>
                   </span>
                 </button>
               );
@@ -246,11 +344,11 @@ export default function Canvas() {
         {info && (
           <div className="canvas-info" role="status">
             <span>
-              40 SVG characters across four families. Every one looks left,
-              right, up and down, blinks, and breaks into a smile. Save or copy
-              any character with its animation built in. Reduced motion is
-              respected. Dots, Grok Bots and Heads are reference-inspired vector
-              recreations, not official assets.
+              {avatars.length} animated SVGs across {families.length}{" "}
+              collections. Faces look around, blink and smile; symbols sway,
+              wave or spin. Save or copy any character with its animation built
+              in. Reduced motion is respected. Dots, Grok Bots and Heads are
+              reference-inspired vector recreations, not official assets.
             </span>
             <a
               href="https://github.com/dyglo/svg-hubs"
