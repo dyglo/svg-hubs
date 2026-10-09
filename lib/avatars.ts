@@ -1,3 +1,4 @@
+import { avatarAnimationCss } from "./avatar-animation";
 export type AvatarState = "idle" | "thinking" | "working" | "success" | "error";
 export const states: AvatarState[] = [
   "idle",
@@ -99,5 +100,9 @@ export function getAvatar(id: string) {
 export function avatarSvg(id: string, color?: string) {
   const a = getAvatar(id);
   const fill = /^#[0-9a-f]{6}$/i.test(color ?? "") ? color : a.color;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path d="${a.path}" fill="#20221f" transform="translate(1 3)"/><path d="${a.path}" fill="${fill}"/><ellipse cx="47" cy="53" rx="11" ry="15" fill="white"/><ellipse cx="76" cy="52" rx="11" ry="15" fill="white"/><ellipse cx="49" cy="55" rx="7" ry="11" fill="#171916"/><ellipse cx="78" cy="54" rx="7" ry="11" fill="#171916"/><path d="M48 77Q62 87 77 74" fill="none" stroke="#171916" stroke-width="3.5" stroke-linecap="round"/></svg>`;
+  const details =
+    a.id === "hand"
+      ? '<path d="M61 22L55 41M78 35L74 47" fill="none" stroke="#171916" stroke-width="3" stroke-linecap="round"/>'
+      : "";
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" class="svg-pal" role="img" aria-label="${a.name}, animated character"><style>${avatarAnimationCss}</style><g class="pal-body"><path d="${a.path}" fill="#20221f" transform="translate(1 3)"/><path d="${a.path}" fill="${fill}"/>${details}<g class="pal-eyes"><ellipse cx="47" cy="53" rx="11" ry="15" fill="white"/><ellipse cx="76" cy="52" rx="11" ry="15" fill="white"/><g class="pal-pupils"><ellipse cx="47" cy="54" rx="6.5" ry="10.5" fill="#171916"/><ellipse cx="76" cy="53" rx="6.5" ry="10.5" fill="#171916"/></g></g><g class="pal-cheeks" fill="#ef5880"><ellipse cx="35" cy="72" rx="7" ry="4"/><ellipse cx="87" cy="71" rx="7" ry="4"/></g><path class="pal-smile" d="M48 77Q62 87 77 74" fill="none" stroke="#171916" stroke-width="3.5" stroke-linecap="round"/><g class="pal-grin"><path d="M47 74Q62 81 78 72Q75 94 62 91Q49 91 47 74Z" fill="#171916"/><path d="M55 87Q62 83 70 86Q62 94 55 87Z" fill="#ef7e8a"/></g></g></svg>`;
 }

@@ -1,1 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><path d="M23 25L81 33L85 18L114 64L80 105L79 87C50 91 27 83 8 72Z" fill="#20221f" transform="translate(1 3)"/><path d="M23 25L81 33L85 18L114 64L80 105L79 87C50 91 27 83 8 72Z" fill="#FF7446"/><ellipse cx="47" cy="53" rx="11" ry="15" fill="white"/><ellipse cx="76" cy="52" rx="11" ry="15" fill="white"/><ellipse cx="49" cy="55" rx="7" ry="11" fill="#171916"/><ellipse cx="78" cy="54" rx="7" ry="11" fill="#171916"/><path d="M48 77Q62 87 77 74" fill="none" stroke="#171916" stroke-width="3.5" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" class="svg-pal" role="img" aria-label="Scout, animated character"><style>
+.svg-pal .pal-body{transform-origin:60px 65px;animation:pal-breathe 6s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
+.svg-pal .pal-eyes{transform-origin:60px 53px;animation:pal-blink 11s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
+.svg-pal .pal-pupils{animation:pal-look 14s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
+.svg-pal .pal-smile{transform-origin:62px 77px;animation:pal-smile 14s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
+.svg-pal .pal-grin{opacity:0;animation:pal-grin 14s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
+.svg-pal .pal-cheeks{opacity:0;animation:pal-cheeks 14s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
+@keyframes pal-breathe{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-2px) rotate(1deg)}}
+@keyframes pal-look{0%,7%,94%,100%{transform:translate(0,0)}12%,23%{transform:translate(3.5px,0)}28%,39%{transform:translate(-3.5px,0)}44%,55%{transform:translate(0,-3.5px)}60%,70%{transform:translate(0,3.5px)}76%,89%{transform:translate(0,0)}}
+@keyframes pal-blink{0%,19%,21%,61%,63%,100%{transform:scaleY(1)}20%,62%{transform:scaleY(.08)}}
+@keyframes pal-smile{0%,70%,96%,100%{opacity:1;transform:scaleY(1)}77%,89%{opacity:0;transform:scaleY(1.3)}}
+@keyframes pal-grin{0%,70%,96%,100%{opacity:0}77%,89%{opacity:1}}
+@keyframes pal-cheeks{0%,70%,96%,100%{opacity:0}77%,89%{opacity:.3}}
+.svg-pal[data-state="thinking"] .pal-body{animation:pal-ponder 3s ease-in-out infinite}
+.svg-pal[data-state="working"] .pal-body{animation:pal-work 1.6s ease-in-out infinite}
+.svg-pal[data-state="success"] .pal-body{animation:pal-celebrate .6s ease-in-out 1}
+.svg-pal[data-state="error"] .pal-body{animation:pal-shake .4s ease-in-out 1}
+@keyframes pal-ponder{50%{transform:rotate(-5deg)}}
+@keyframes pal-work{50%{transform:translateY(-3px) rotate(2deg)}}
+@keyframes pal-celebrate{35%{transform:translateY(-7px) rotate(-4deg)}70%{transform:translateY(-2px) rotate(3deg)}}
+@keyframes pal-shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
+@media(prefers-reduced-motion:reduce){.svg-pal .pal-body,.svg-pal .pal-eyes,.svg-pal .pal-pupils,.svg-pal .pal-smile,.svg-pal .pal-grin,.svg-pal .pal-cheeks{animation:none!important}}
+</style><g class="pal-body"><path d="M23 25L81 33L85 18L114 64L80 105L79 87C50 91 27 83 8 72Z" fill="#20221f" transform="translate(1 3)"/><path d="M23 25L81 33L85 18L114 64L80 105L79 87C50 91 27 83 8 72Z" fill="#FF7446"/><g class="pal-eyes"><ellipse cx="47" cy="53" rx="11" ry="15" fill="white"/><ellipse cx="76" cy="52" rx="11" ry="15" fill="white"/><g class="pal-pupils"><ellipse cx="47" cy="54" rx="6.5" ry="10.5" fill="#171916"/><ellipse cx="76" cy="53" rx="6.5" ry="10.5" fill="#171916"/></g></g><g class="pal-cheeks" fill="#ef5880"><ellipse cx="35" cy="72" rx="7" ry="4"/><ellipse cx="87" cy="71" rx="7" ry="4"/></g><path class="pal-smile" d="M48 77Q62 87 77 74" fill="none" stroke="#171916" stroke-width="3.5" stroke-linecap="round"/><g class="pal-grin"><path d="M47 74Q62 81 78 72Q75 94 62 91Q49 91 47 74Z" fill="#171916"/><path d="M55 87Q62 83 70 86Q62 94 55 87Z" fill="#ef7e8a"/></g></g></svg>

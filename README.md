@@ -1,8 +1,10 @@
 # SVG Hubs
 
-Next.js character gallery and Deplyze-style workspace demo, rebuilt from the supplied standalone design reference. Includes twelve vector characters, five status expressions/animations, SVG export, React usage copying, editable agent identity, and local preference persistence.
+A single open canvas of twelve animated SVG characters, built with Next.js. Pick a character and save or copy it directly. No gallery cards, workspace demo, or animation controls.
 
-## Development
+Every character automatically looks right, left, up and down, blinks, breathes, and smiles. Different phase offsets make the canvas feel alive. Exports are standalone SVG files with their CSS animation embedded: they work without React or an animation library. All animation respects `prefers-reduced-motion`.
+
+## Develop and verify
 
 ```sh
 npm ci
@@ -12,45 +14,61 @@ npm run dev
 ```sh
 npm run typecheck
 npm run build
+npx playwright install chromium
 npm test
 ```
 
-For browser tests, first run `npx playwright install chromium`. Tests start the production server automatically after a build.
+Browser tests cover all twelve characters, gaze in each direction, smiling, reduced motion, color customization, SVG download/copy, standalone exports and mobile layout.
 
-## Use in your React app
+## Use in your app
 
-Copy `components/AgentAvatar.tsx` and `lib/avatars.ts` into your project (adjust the `@/` import if needed). Copy the avatar CSS from `app/globals.css`: `.agent-avatar`, `.avatar-body`, state animation selectors and keyframes, plus the reduced-motion media query. No animation library is required.
+Save an SVG from the canvas or use a default file in `public/avatars/`. Embed it as an image or inline SVG. Animation is included. When placed through an HTML `<img>`, the CSS in the SVG still runs; reduced-motion preferences still apply.
+
+For React, copy `components/AgentAvatar.tsx`, `lib/avatars.ts` and `lib/avatar-animation.ts`. Adjust the `@/` import for your project. No separate animation CSS or animation dependency is needed.
 
 ```tsx
 import AgentAvatar from "./components/AgentAvatar";
 
-<AgentAvatar
-  avatarId="bubble"
-  name="Tafar"
-  color="#29B8ED"
-  state="thinking"
-  size={64}
-/>;
+<AgentAvatar avatarId="star" name="Stella" size={80} color="#FFCD48" />;
 ```
 
-Props: `avatarId`, `name`, `color` (six-digit hex), `size` (pixels), `state` (`idle`, `thinking`, `working`, `success`, `error`), `className`, and `decorative`. Avatars carry a name/status accessible label; use `decorative` when adjacent text already describes the image. State expressions remain visible when reduced motion disables animation.
+Props: `avatarId`, `name`, `color` (six-digit hex), `size` (pixels), `delay` (seconds; use negative values for staggered phases), `className`, `decorative`, and optional `state` (`idle`, `thinking`, `working`, `success`, `error`). Gaze, blinking and smiles are automatic; a state can additionally change body movement or show an error expression. Use `decorative` when adjacent text already labels the character.
 
-Standalone default SVGs are in `public/avatars/`. Regenerate them after editing the registry with `node scripts/export-avatars.mjs`. Gallery exports use the user's selected color. SVG downloads are static; React usage adds the five animated states.
+Add layout CSS for the wrapper:
+
+```css
+.agent-avatar {
+  display: inline-block;
+  flex-shrink: 0;
+}
+.agent-avatar > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+```
+
+Regenerate the default exports after editing shapes or animation:
+
+```sh
+node scripts/export-avatars.mjs
+```
 
 ## Architecture
 
-- `lib/avatars.ts`: typed avatar registry, shapes, color validation, static export.
-- `components/AgentAvatar.tsx`: reusable SVG renderer and state expressions.
-- `components/Hub.tsx`: gallery, customization, exports, browser-persisted agents.
-- `components/Workspace.tsx`: sidebar, chat, agent cards, cockpit and sample execution.
-- `app/globals.css`: gallery styling, reference-inspired workspace, responsive layout and reduced motion.
+- `components/Canvas.tsx`: open canvas, character selection, color swatches, save/copy.
+- `components/AgentAvatar.tsx`: reusable accessible SVG renderer.
+- `lib/avatars.ts`: typed registry and animated SVG export.
+- `lib/avatar-animation.ts`: shared look, blink, smile and status keyframes.
+- `app/globals.css`: responsive paper canvas.
 
-The workspace is a scripted demo, not a live AI service. Agent names, colors and avatars persist in this browser under `svg-hubs-agents`. No credentials or environment variables are needed. The original export had scripted chat rather than a backend; this implementation similarly does not modify files, execute tools, or contact external integrations.
+No backend, credentials, or environment variables are required. The earlier Deplyze-style workspace demo has been removed from the public site. This repository does not contain the live Deplyze app.
 
-## Deployment
+## Deploy
 
-Import `dyglo/svg-hubs` in Vercel with the Next.js preset, repository root, `npm ci` install command and `npm run build` build command. No environment variables are required.
+Vercel uses the Next.js preset, repository root and `npm run build`. Pushes to `main` deploy production.
 
 ## Commerce and licensing
 
-Downloads and copying are implemented. Payments are not configured: commercial prices, licensing terms and a checkout provider must be supplied before selling these assets. No commercial license for the provided character references is asserted by this repository.
+Save and Copy are available directly. Payments are not configured. Commercial prices, licensing terms and a checkout provider must be supplied before selling these assets. No commercial license for the provided character references is asserted by this repository.

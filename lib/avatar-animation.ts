@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" class="svg-pal" role="img" aria-label="Ziggy, animated character"><style>
+/** Shared by React previews and standalone SVG exports. No timers or animation library. */
+export const avatarAnimationCss = `
 .svg-pal .pal-body{transform-origin:60px 65px;animation:pal-breathe 6s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
 .svg-pal .pal-eyes{transform-origin:60px 53px;animation:pal-blink 11s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
 .svg-pal .pal-pupils{animation:pal-look 14s ease-in-out infinite;animation-delay:var(--pal-delay,0s)}
@@ -20,4 +21,4 @@
 @keyframes pal-celebrate{35%{transform:translateY(-7px) rotate(-4deg)}70%{transform:translateY(-2px) rotate(3deg)}}
 @keyframes pal-shake{25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}
 @media(prefers-reduced-motion:reduce){.svg-pal .pal-body,.svg-pal .pal-eyes,.svg-pal .pal-pupils,.svg-pal .pal-smile,.svg-pal .pal-grin,.svg-pal .pal-cheeks{animation:none!important}}
-</style><g class="pal-body"><path d="M49 8L73 28L106 21L101 49L118 61L99 77L112 99L84 95L76 116L57 96L32 112L35 85L13 90L23 66L4 56L29 44L13 23L44 28Z" fill="#20221f" transform="translate(1 3)"/><path d="M49 8L73 28L106 21L101 49L118 61L99 77L112 99L84 95L76 116L57 96L32 112L35 85L13 90L23 66L4 56L29 44L13 23L44 28Z" fill="#B86AF2"/><g class="pal-eyes"><ellipse cx="47" cy="53" rx="11" ry="15" fill="white"/><ellipse cx="76" cy="52" rx="11" ry="15" fill="white"/><g class="pal-pupils"><ellipse cx="47" cy="54" rx="6.5" ry="10.5" fill="#171916"/><ellipse cx="76" cy="53" rx="6.5" ry="10.5" fill="#171916"/></g></g><g class="pal-cheeks" fill="#ef5880"><ellipse cx="35" cy="72" rx="7" ry="4"/><ellipse cx="87" cy="71" rx="7" ry="4"/></g><path class="pal-smile" d="M48 77Q62 87 77 74" fill="none" stroke="#171916" stroke-width="3.5" stroke-linecap="round"/><g class="pal-grin"><path d="M47 74Q62 81 78 72Q75 94 62 91Q49 91 47 74Z" fill="#171916"/><path d="M55 87Q62 83 70 86Q62 94 55 87Z" fill="#ef7e8a"/></g></g></svg>
+`;

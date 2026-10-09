@@ -1,4 +1,4 @@
-import Hub from "@/components/Hub";
+import Canvas from "@/components/Canvas";
 export default function Page() {
-  return <Hub />;
+  return <Canvas />;
 }
